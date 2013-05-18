@@ -73,12 +73,14 @@ class #{name}#{e}:
   def __init__(self, #{LT.intercalate ", " $ map g fs}):
 #{LT.concat $ map f flds}
   def to_msgpack(self):
-    return (#{LT.concat $ map typ flds}
-      )
+    return msgpack.dumps((#{LT.concat $ map typ flds}
+      ))
 
   @staticmethod
   def from_msgpack(arg):
-    return #{name}(
+    arg = msgpack.loads(arg)
+    arg[0:0] = [None]
+    return #{name}(arg[0],
       #{LT.intercalate ",\n      " $ map make_arg flds})
 |]
 
