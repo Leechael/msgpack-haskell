@@ -79,8 +79,7 @@ class #{name}#{e}:
   @staticmethod
   def from_msgpack(arg):
     arg = msgpack.loads(arg)
-    arg[0:0] = [None]
-    return #{name}(arg[0],
+    return #{name}(
       #{LT.intercalate ",\n      " $ map make_arg flds})
 |]
 
